@@ -1,0 +1,49 @@
+/* Container for the movie grid */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; /* Spacing between movie cards */
+  padding: 20px;
+}
+
+/* Individual movie card */
+.movie-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Movie poster image */
+.movie-card img {
+  width: 100%; /* Ensure the image fills the card width */
+  height: auto;
+  display: block;
+}
+
+/* Information section inside the movie card */
+.movie-info {
+  padding: 12px 16px;
+  text-align: center;
+}
+
+/* Movie title styling */
+.movie-info h3 {
+  font-size: 18px;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+/* Release year styling */
+.movie-info p {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
+}
