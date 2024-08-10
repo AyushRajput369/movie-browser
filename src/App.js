@@ -17,7 +17,7 @@ function App() {
         <Router>
           <div className="App">
             <header className="App-header">
-              <h1>Movie Explorer</h1>
+              <span>Movie Explorer</span>
             </header>
             <main>
               <Routes>

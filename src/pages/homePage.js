@@ -7,6 +7,7 @@ import { useHeaders } from "../hooks/useHeader";
 import { useCustomToast } from "../hooks/useToast";
 import Loader from "../components/Loader/loader";
 import NoData from "../components/NoData/noData";
+import FilterOptions from "../components/Filter/filterOptions";
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -17,8 +18,13 @@ const HomePage = () => {
   const headers = useHeaders();
   const { showToast } = useCustomToast();
   const [loading, setLoading] = useState(false);
+  const [filters, setFilters] = useState({
+    genre: "",
+    year: "",
+    rating: ""
+  });
 
-  // Reset movies and page when query changes
+  // Reset movies and page when query or filters change
   useEffect(() => {
     const handleDebounce = setTimeout(() => {
       setMovies([]);
@@ -27,7 +33,7 @@ const HomePage = () => {
     }, debounceDelay);
 
     return () => clearTimeout(handleDebounce);
-  }, [query]);
+  }, [query, filters]);
 
   const errorHandler = (error) => {
     showToast(error, "error");
@@ -35,9 +41,25 @@ const HomePage = () => {
 
   const fetchMovies = async (query, page) => {
     setLoading(true);
-    const url = query
-      ? `/search/movie?query=${query}&page=${page}`
-      : `/discover/movie?page=${page}`;
+
+    let url = "";
+
+    if (query) {
+      url = `/search/movie?query=${query}&page=${page}`;
+    } else {
+      url = `/discover/movie?page=${page}`;
+
+      if (filters?.genre) {
+        url += `&with_genres=${filters?.genre}`;
+      }
+      if (filters?.year) {
+        url += `&year=${filters?.year}`;
+      }
+      if (filters?.rating) {
+        url += `&vote_average.gte=${filters?.rating}`;
+      }
+    }
+
     const response = await getRequest(url, headers, errorHandler);
     setLoading(false);
     if (!response) {
@@ -68,6 +90,7 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <SearchBar query={query} setQuery={setQuery} />
+      <FilterOptions filters={filters} setFilters={setFilters} />
       <InfiniteScroll
         dataLength={movies?.length}
         next={fetchMoreMovies}
