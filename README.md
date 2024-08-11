@@ -72,5 +72,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ////////////////////////////////////////////////
 
-API used from site: TMDB
+API used from site: TMDB APIs
 link : https://developer.themoviedb.org/docs/getting-started
